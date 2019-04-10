@@ -1,5 +1,5 @@
 # fast_docker_nmpt
-docker软件配置包：ubuntu+docker+nginx+mysql+php+tomcat+负载均衡
+docker+php+nginx负载+mysql+tomcat+redis共享session环境搭建  
 给服务器搭环境是一件很苦恼的事情，在接触了docker之后觉得能把事情由复杂变简单，所以在此记录下我搭建一套可访问的docker环境所做的事情。
 环境：阿里云ubuntu1604
 1. 安装最新版本的 Docker 安装包
