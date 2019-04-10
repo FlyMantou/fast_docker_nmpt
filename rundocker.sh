@@ -17,7 +17,7 @@ sudo docker run --name=mytomcat1 \
  --link=mysql:mysql \
  -d tomcat
 sudo docker run --name=mytomcat2 \
- -v $PWD/tomcat/webapps:/usr/local/tomcat/webapps \
+ -v $PWD/tomcat/webapps1:/usr/local/tomcat/webapps \
  -p 8082:8080 \
  --link=mysql:mysql \
  -d tomcat
@@ -26,7 +26,6 @@ sudo docker run --name mynginx \
  --link=myphp:phpfpm \
  --link=mytomcat1:t1 \
  --link=mysql:mysql \
- --link=mytomcat1:t1 \
  --link=mytomcat2:t2 \
  -p 80:80 \
  -v $PWD/nginx/www:/www \
@@ -34,3 +33,22 @@ sudo docker run --name mynginx \
  -v $PWD/nginx/conf.d:/etc/nginx/conf.d \
  -d nginx
 
+sudo docker run --name myredis -p 6379:6379 -v $PWD/redis/data:/data -d redis:3.2 redis-server --appendonly yes
+
+docker cp $PWD/tomcat/confcopy/context.xml mytomcat1:/usr/local/tomcat/conf
+docker cp $PWD/tomcat/confcopy/redis-data-cache.properties mytomcat1:/usr/local/tomcat/conf
+docker cp $PWD/tomcat/libcopy/commons-logging-1.2.jar mytomcat1:/usr/local/tomcat/lib
+docker cp $PWD/tomcat/libcopy/commons-pool2-2.4.2.jar mytomcat1:/usr/local/tomcat/lib
+docker cp $PWD/tomcat/libcopy/jedis-2.9.0.jar mytomcat1:/usr/local/tomcat/lib
+docker cp $PWD/tomcat/libcopy/tomcat-cluster-redis-session-manager-2.0.3.jar mytomcat1:/usr/local/tomcat/lib
+
+docker restart mytomcat1
+
+docker cp $PWD/tomcat/confcopy/context.xml mytomcat2:/usr/local/tomcat/conf
+docker cp $PWD/tomcat/confcopy/redis-data-cache.properties mytomcat2:/usr/local/tomcat/conf
+docker cp $PWD/tomcat/libcopy/commons-logging-1.2.jar mytomcat2:/usr/local/tomcat/lib
+docker cp $PWD/tomcat/libcopy/commons-pool2-2.4.2.jar mytomcat2:/usr/local/tomcat/lib
+docker cp $PWD/tomcat/libcopy/jedis-2.9.0.jar mytomcat2:/usr/local/tomcat/lib
+docker cp $PWD/tomcat/libcopy/tomcat-cluster-redis-session-manager-2.0.3.jar mytomcat2:/usr/local/tomcat/lib
+
+docker restart mytomcat2
