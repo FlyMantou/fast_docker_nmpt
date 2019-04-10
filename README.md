@@ -1,6 +1,6 @@
 # fast_docker_nmpt
 docker+php+nginx负载+mysql+tomcat+redis共享session环境搭建  
-给服务器搭环境是一件很苦恼的事情，在接触了docker之后觉得能把事情由复杂变简单，所以在此记录下我搭建一套可访问的docker环境所做的事情。
+给服务器搭环境是一件很苦恼的事情，在接触了docker之后觉得能把事情由复杂变简单，所以在此记录下我搭建一套可访问的docker环境所做的事情。  
 环境：阿里云ubuntu1604
 1. 安装最新版本的 Docker 安装包
 ```shell
@@ -166,9 +166,9 @@ server {
 }
 
 
-```
-说明：自己写了上面的shell脚本帮助快速操作docker，比较难搞的是nginx配置文件nginx/conf.d/default.conf文件的配置内容，addhost.sh文件的原理也是在此文件追加配置内容。所有内容请依据自己的环境进行适当更改，如果本文能够帮到你，请给我点个赞吧！
-参考地址：
-docker菜鸟教程：http://www.runoob.com/docker/docker-tutorial.html
-nginx反向代理：https://blog.csdn.net/u012251836/article/details/82733803
-tomcat8配置redis：https://blog.csdn.net/lin252552/article/details/80096455
+```  
+说明：自己写了上面的shell脚本帮助快速操作docker，比较难搞的是nginx配置文件nginx/conf.d/default.conf文件的配置内容，addhost.sh文件的原理也是在此文件追加配置内容。所有内容请依据自己的环境进行适当更改，如果本文能够帮到你，请给我点个赞吧！  
+参考地址：  
+docker菜鸟教程：http://www.runoob.com/docker/docker-tutorial.html  
+nginx反向代理：https://blog.csdn.net/u012251836/article/details/82733803  
+tomcat8配置redis：https://blog.csdn.net/lin252552/article/details/80096455  
