@@ -1,6 +1,6 @@
-# fast_docker_nmpt
-docker+php+nginx负载+mysql+tomcat+redis共享session环境搭建  
-给服务器搭环境是一件很苦恼的事情，在接触了docker之后觉得能把事情由复杂变简单，所以在此记录下我搭建一套可访问的docker环境所做的事情。  
+# fast_docker_nmptr
+2分钟搭建docker全家桶套餐：docker+php+nginx+mysql+tomcat(x2)+redis  
+使用docker可以快速搭建并移植服务器环境，本文将带你2分钟搭建php与tomcat共存运行环境（只要你手速快，1分钟也是可以搞定的）  
 环境：阿里云ubuntu1604
 1. 安装最新版本的 Docker 安装包
 ```shell
@@ -13,12 +13,12 @@ sudo service docker start
 3. 下载镜像
 ```shell
 docker pull nginx
-docker pull php
+docker pull php:5.6-fpm
 docker pull mysql:5.6
 docker pull tomcat
 docker pull redis:3.2
 ```
-4. 下载我的配置文件包
+4. 下载me的配置文件包（需要git：sudo apt-get install git）
 ```shell
 git clone https://github.com/FlyMantou/fast_docker_nmpt.git
 ```
@@ -27,42 +27,49 @@ git clone https://github.com/FlyMantou/fast_docker_nmpt.git
 
 5. 启动docker容器
 ```shell
-./dockerClear.sh
-./rundocker.sh
+./clear.sh
+./run.sh
 ```
 6. 添加php虚拟主机
 ```shell
 ./addhost.sh
 ```
-部分文件内容如下：
-dockerClear.sh
+7. 进入docker容器
+```shell
+./enter.sh
+```
+
+部分文件内容如下，可修改适配自己的服务器：
+clear.sh
 ```shell
 docker stop $(docker ps -q)
-docker rm `docker ps -a -q`
+docker rm `docker ps -a -q`  
 ```
-rundocker.sh
+run.sh  
 ```shell
 
 sudo docker run --name mysql \
  -p 3306:3306 \
  -e MYSQL_ROOT_PASSWORD=111220179 \
  -v $PWD/mysql:/var/lib/mysql \
- -v $PWD/mysqllogs:/logs \
+ -v $PWD/logs/mysql:/logs \
  -d mysql:5.6
 sudo docker run --name myphp \
  -p 9000:9000 \
  --link=mysql:mysql \
  -v $PWD/nginx/www:/www \
  -v $PWD/php/conf:/usr/local/etc/php \
- -v $PWD/phplogs:/phplogs \
+ -v $PWD/logs/php:/phplogs \
  -d php:5.6-fpm
 sudo docker run --name=mytomcat1 \
  -v $PWD/tomcat/webapps:/usr/local/tomcat/webapps \
+ -v /mnt:/mnt \
  -p 8081:8080 \
  --link=mysql:mysql \
  -d tomcat
 sudo docker run --name=mytomcat2 \
  -v $PWD/tomcat/webapps1:/usr/local/tomcat/webapps \
+ -v /mnt:/mnt \
  -p 8082:8080 \
  --link=mysql:mysql \
  -d tomcat
@@ -167,7 +174,7 @@ server {
 
 
 ```  
-说明：自己写了上面的shell脚本帮助快速操作docker，比较难搞的是nginx配置文件nginx/conf.d/default.conf文件的配置内容，addhost.sh文件的原理也是在此文件追加配置内容。所有内容请依据自己的环境进行适当更改，如果本文能够帮到你，请给我点个赞吧！  
+说明：以上shell脚本帮助快速操作docker，值得注意的是nginx配置文件nginx/conf.d/default.conf文件的配置内容，addhost.sh文件的原理也是在此文件追加配置内容。所有内容请依据自己的环境进行适当更改，如果本文能够帮到你，请给我点个赞吧！  
 参考地址：  
 docker菜鸟教程：http://www.runoob.com/docker/docker-tutorial.html  
 nginx反向代理：https://blog.csdn.net/u012251836/article/details/82733803  
