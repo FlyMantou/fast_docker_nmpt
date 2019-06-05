@@ -19,3 +19,4 @@ echo "server {
   }
 }
 " >> $PWD/nginx/conf.d/default.conf
+mkdirs "$PWD/nginx/www/$domain"

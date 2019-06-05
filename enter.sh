@@ -4,6 +4,8 @@ echo "input which docker container you want open:"
 echo "0 : nginx"
 echo "1 : php"
 echo "2 : mysql"
+echo "3 : tomcat1"
+echo "4 : tomcat2"
 
 read -p "enter number:" key
 
@@ -25,4 +27,14 @@ fi
 if [ $key -eq "2" ];then
     echo "start open mysql bash,please wait..."
     docker exec -it mysql /bin/bash
+fi
+
+if [ $key -eq "3" ];then
+    echo "start open tomcat1 bash,please wait..."
+    docker exec -it mytomcat1 /bin/bash
+fi
+
+if [ $key -eq "4" ];then
+    echo "start open tomcat2 bash,please wait..."
+    docker exec -it mytomcat2 /bin/bash
 fi
