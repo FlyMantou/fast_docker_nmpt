@@ -37,6 +37,15 @@ sudo docker run --name mynginx \
 
 sudo docker run --name myredis -p 6379:6379 -v $PWD/redis/data:/data -d redis:3.2 redis-server --appendonly yes
 
+docker run --name myjenkins \
+  -u root \
+  --rm \
+  -p 8083:8080 \
+  -p 50000:50000 \
+  -v $PWD/jenkins/data:/var/jenkins_home \
+  -v $PWD/jenkins/docker.sock:/var/run/docker.sock \
+  -d jenkinsci/blueocean
+
 docker cp $PWD/tomcat/confcopy/context.xml mytomcat1:/usr/local/tomcat/conf
 docker cp $PWD/tomcat/confcopy/redis-data-cache.properties mytomcat1:/usr/local/tomcat/conf
 docker cp $PWD/tomcat/libcopy/commons-logging-1.2.jar mytomcat1:/usr/local/tomcat/lib
