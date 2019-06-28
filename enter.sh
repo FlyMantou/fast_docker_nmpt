@@ -6,6 +6,7 @@ echo "1 : php"
 echo "2 : mysql"
 echo "3 : tomcat1"
 echo "4 : tomcat2"
+echo "5 : redis"
 
 read -p "enter number:" key
 
@@ -37,4 +38,9 @@ fi
 if [ $key -eq "4" ];then
     echo "start open tomcat2 bash,please wait..."
     docker exec -it mytomcat2 /bin/bash
+fi
+
+if [ $key -eq "5" ];then
+    echo "start open tomcat2 bash,please wait..."
+    docker exec -it myredis /bin/bash
 fi
