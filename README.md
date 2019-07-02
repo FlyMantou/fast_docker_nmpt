@@ -1,4 +1,3 @@
-# fast_docker_nmptr
 2分钟搭建docker全家桶套餐：docker+php+nginx+mysql+tomcat(x2)+redis  
 使用docker可以快速搭建并移植服务器环境，本文将带你2分钟搭建php与tomcat共存运行环境（只要你手速快，1分钟也是可以搞定的）  
 环境：阿里云ubuntu1604
@@ -10,44 +9,39 @@ wget -qO- https://get.docker.com/ | sh
 ```shell
 sudo service docker start
 ```
-3. 下载镜像
-```shell
-docker pull nginx
-docker pull php:5.6-fpm
-docker pull mysql:5.6
-docker pull tomcat
-docker pull redis:3.2
-```
-4. 下载me的配置文件包（需要git：sudo apt-get install git）
+3. 下载我的配置文件包（需要git：sudo apt-get install git）
 ```shell
 git clone https://github.com/FlyMantou/fast_docker_nmpt.git
 ```
-目录说明：部分目录为执行 rundocker.sh之后自动生成
- ![image.png](https://upload-images.jianshu.io/upload_images/11285551-9d027d35def661d8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+> 目录说明：部分目录为执行 rundocker.sh之后自动生成
+![note.png](https://upload-images.jianshu.io/upload_images/11285551-4f04a6c854909935.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
-5. 启动docker容器
+
+4. 启动docker容器
 ```shell
 ./clear.sh
 ./run.sh
 ```
-6. 添加php虚拟主机
+---- 
+> 至此，docker全家桶环境搭建完成！下面是一些操作选项
+1. 添加php虚拟主机
 ```shell
 ./addhost.sh
 ```
-7. 进入docker容器
+>此文件原理是在nginx的配置文件default.conf文件中追加条目
+2. 进入docker容器
 ```shell
 ./enter.sh
 ```
-
-部分文件内容如下，可修改适配自己的服务器：
+---- 
+核心文件内容如下：
 clear.sh
 ```shell
 docker stop $(docker ps -q)
-docker rm `docker ps -a -q`  
+docker rm `docker ps -a -q`
 ```
-run.sh  
+run.sh
 ```shell
-
 sudo docker run --name mysql \
  -p 3306:3306 \
  -e MYSQL_ROOT_PASSWORD=111220179 \
@@ -173,9 +167,9 @@ server {
 }
 
 
-```  
-说明：以上shell脚本帮助快速操作docker，值得注意的是nginx配置文件nginx/conf.d/default.conf文件的配置内容，addhost.sh文件的原理也是在此文件追加配置内容。所有内容请依据自己的环境进行适当更改，如果本文能够帮到你，请给我点个赞吧！  
-参考地址：  
-docker菜鸟教程：http://www.runoob.com/docker/docker-tutorial.html  
-nginx反向代理：https://blog.csdn.net/u012251836/article/details/82733803  
-tomcat8配置redis：https://blog.csdn.net/lin252552/article/details/80096455  
+```
+所有内容请依据自己的环境进行适当更改，如有问题请在留言区写下，如果本文能够帮到你，请给我点个赞吧！
+参考地址：
+docker菜鸟教程：http://www.runoob.com/docker/docker-tutorial.html
+nginx反向代理：https://blog.csdn.net/u012251836/article/details/82733803
+tomcat8配置redis：https://blog.csdn.net/lin252552/article/details/80096455
